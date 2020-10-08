@@ -28,7 +28,7 @@ const MainPageContent = () => {
             return <div key={index} className="book-container">
                 <img className="book-picture" src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''} alt="No found" />
                 <p className="book-title">{book.volumeInfo.title}</p>
-                <p className="book-description-container">{book.volumeInfo.description}</p>
+                <p className="book-description-container">{book.volumeInfo.description ? `${book.volumeInfo.description.split(' ').slice(0, 15).join(' ')}...` : 'No description found'}</p>
             </div>
         }) : null
     }
