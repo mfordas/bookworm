@@ -7,11 +7,10 @@ import { getBooksFromApi } from '../../redux_actions/bookActions';
 const MainPageContent = ({ getBooksFromApi, booksData }) => {
     const [bookTitle, setBookTitle] = useState('');
 
-
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (bookTitle) {
-                getBooksFromApi(bookTitle, booksData);
+                getBooksFromApi(bookTitle, booksData, '');
             };
         }, 500);
 
@@ -19,6 +18,21 @@ const MainPageContent = ({ getBooksFromApi, booksData }) => {
             clearTimeout(timeoutId);
         };
     }, [bookTitle]);
+
+    useEffect(() => {
+        let timer;
+        window.onscroll = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                if (document.getElementById('root').getBoundingClientRect().bottom <= window.innerHeight) {
+                    getBooksFromApi(bookTitle, booksData, '')
+                }
+                else {
+                    return
+                }
+            }, 100);
+        }
+    }, [booksData]);
 
     const renderBooksList = () => {
         return booksData.length > 0 ? booksData.map((book, index) => {

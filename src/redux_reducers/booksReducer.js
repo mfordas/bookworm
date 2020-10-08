@@ -4,6 +4,7 @@ import {
 
 const initialState = {
     books: [],
+    bookTitle: ''
 };
 
 export default function (state = initialState, action) {
@@ -11,7 +12,14 @@ export default function (state = initialState, action) {
         case TYPES.getBooks:
             return {
                 ...state,
+                books: [...action.books],
+                bookTitle: action.bookTitle,
+            };
+        case TYPES.getNextBooks:
+            return {
+                ...state,
                 books: [...state.books, ...action.books],
+                bookTitle: action.bookTitle,
             };
             default:
                 return state;
