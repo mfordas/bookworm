@@ -1,30 +1,27 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const MainPageContent = () => {
-    const [books, setBooks] = useState([]);
+import { getBooksFromApi } from '../../redux_actions/bookActions';
+
+const MainPageContent = ({ getBooksFromApi, booksData }) => {
     const [bookTitle, setBookTitle] = useState('');
 
-    const getBooksFromApi = async () => {
-        const booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}&maxResults=10&startIndex=${books.length}`);
-        setBooks([...books, ...booksFromApi.data.items]);
-        console.log(booksFromApi.data.items);
-    };
 
     useEffect(() => {
-            const timeoutId = setTimeout(() => {
-                if (bookTitle) {
-                    getBooksFromApi();
-                };
-            }, 500);
-
-            return () => {
-                clearTimeout(timeoutId);
+        const timeoutId = setTimeout(() => {
+            if (bookTitle) {
+                getBooksFromApi(bookTitle, booksData);
             };
+        }, 500);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, [bookTitle]);
 
     const renderBooksList = () => {
-        return books.length > 0 ? books.map((book,index) => {
+        return booksData.length > 0 ? booksData.map((book, index) => {
             return <div key={index} className="book-container">
                 <img className="book-picture" src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''} alt="No found" />
                 <p className="book-title">{book.volumeInfo.title}</p>
@@ -52,4 +49,12 @@ const MainPageContent = () => {
     )
 };
 
-export default MainPageContent;
+const mapStateToProps = (state) => ({
+    booksData: state.booksData.books,
+});
+
+MainPageContent.propTypes = {
+    booksData: PropTypes.array,
+}
+
+export default connect(mapStateToProps, { getBooksFromApi })(MainPageContent);
