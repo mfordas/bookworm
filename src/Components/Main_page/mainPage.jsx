@@ -1,60 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-import { getBooksFromApi } from '../../redux_actions/bookActions';
+import SearchBar from '../SearchBar';
+import BooksList from '../BooksList';
 
-const MainPageContent = ({ getBooksFromApi, booksData }) => {
-    const [bookTitle, setBookTitle] = useState('');
-
-
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            if (bookTitle) {
-                getBooksFromApi(bookTitle, booksData);
-            };
-        }, 500);
-
-        return () => {
-            clearTimeout(timeoutId);
-        };
-    }, [bookTitle]);
-
-    const renderBooksList = () => {
-        return booksData.length > 0 ? booksData.map((book, index) => {
-            return <div key={index} className="book-container">
-                <img className="book-picture" src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.smallThumbnail : ''} alt="No found" />
-                <p className="book-title">{book.volumeInfo.title}</p>
-                <p className="book-description-container">{book.volumeInfo.description ? `${book.volumeInfo.description.split(' ').slice(0, 15).join(' ')}...` : 'No description found'}</p>
-            </div>
-        }) : null
-    }
-
+const MainPageContent = () => {
     return (
         <div className='mainPage'>
-            <h3>Welcome all bookworms! Here you will find book from all around the world! Hope you'll enjoy it :)</h3>
-            <div className="input-container">
-                <input
-                    className="input"
-                    value={bookTitle}
-                    onChange={(e) => setBookTitle(e.target.value)}
-                    placeholder="Type what you're looking for"
-                >
-                </input>
-            </div>
-            <div className="books-container">
-                {renderBooksList()}
-            </div>
+            <h3>Welcome all bookworms! Here you will find books from all around the world! Hope you'll enjoy it :)</h3>
+            <SearchBar />
+            <BooksList />
         </div>
     )
 };
 
-const mapStateToProps = (state) => ({
-    booksData: state.booksData.books,
-});
-
-MainPageContent.propTypes = {
-    booksData: PropTypes.array,
-}
-
-export default connect(mapStateToProps, { getBooksFromApi })(MainPageContent);
+export default MainPageContent;

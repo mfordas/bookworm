@@ -1,20 +1,38 @@
 import axios from 'axios';
+import {
+    store
+} from '../redux_store/reduxStore';
 
 import {
     TYPES
 } from './types';
 
-export const getBooksFromApi = (bookTitle, currentBooksList) => async (dispatch) => {
+export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (dispatch) => {
     try {
-        const booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}&maxResults=10&startIndex=${currentBooksList.length}`);
+        let booksFromApi;
 
-        console.log(booksFromApi.data.items);
+        if (store.getState().booksData.bookTitle === bookTitle && store.getState().booksData.filter === filter) {
+            booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${store.getState().booksData.bookTitle}${filter}&maxResults=10&startIndex=${currentBooksList.length}`);
 
-        if (booksFromApi.status === 200) {
-            dispatch({
-                type: TYPES.getBooks,
-                books: booksFromApi.data.items
-            });
+            if (booksFromApi.status === 200) {
+                dispatch({
+                    type: TYPES.getNextBooks,
+                    books: booksFromApi.data.items,
+                    bookTitle: bookTitle,
+                    filter: filter,
+                });
+            }
+        } else {
+            booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}${filter}&maxResults=10&startIndex=0`);
+
+            if (booksFromApi.status === 200) {
+                dispatch({
+                    type: TYPES.getBooks,
+                    books: booksFromApi.data.items,
+                    bookTitle: bookTitle,
+                    filter: filter,
+                });
+            }
         }
 
     } catch (error) {
@@ -22,3 +40,13 @@ export const getBooksFromApi = (bookTitle, currentBooksList) => async (dispatch)
     }
 
 };
+
+export const resetSearchResults = () => (dispatch) => {
+
+    dispatch({
+        type: TYPES.resetSearch,
+        books: [],
+        bookTitle: '',
+        filter: '',
+    });
+}

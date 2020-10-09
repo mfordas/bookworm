@@ -1,104 +1,165 @@
 body {
     margin: 0;
-    height: 100vh;
-    box-sizing: border-box;
 
-    #root {
+}
 
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            width: 100vw;
-            min-height: 100vh;
-            justify-content: center;
-            align-items: center;
+.app-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
 
-            .mainPage {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                flex-grow: 1;
-                width: 75%;
-            }
+}
 
-            .books-container {
-                display:flex;
-                flex-direction: column;
+.mainPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    width: 75%;
+}
 
-                .book-container {
-                    display: flex;
-                    width: 100%;
-                    justify-content: space-evenly;
-                    align-items: center;
-                    margin: 0.2rem;
+.books-container {
+    display: flex;
+    flex-direction: column;
 
-                    .book-picture {
-                        max-width: 100px;
-                        padding: 0.5em;
-                        margin: 0.5rem;
-                        width: 25%;
-                        max-height: 150px
-                    }
+    .book-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 0.2rem;
 
-                    .book-title {
-                        padding: 0.5rem;
-                        margin: 0.5rem;
-                        width: 50%;
-                    }
-
-                    .book-description-container {
-                        padding: 0.5rem;
-                        margin: 0.5rem;
-                        width: 25%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                }
-
-            }
-
-            .header-container {
-                display: flex;
-                width: 50%;
-                padding: 1rem;
-                margin: 1rem;
-                justify-content: center;
-                align-items: center;
-
-                img {
-                    padding: 0.5rem;
-                    max-width: 5rem;
-                    height: auto;
-                }
-
-                p {
-                    font-size: 5em;
-                    padding: 0.5rem;
-                    margin: 0.5rem;
-                }
-            }
-
-            .input-container {
-
-                input,
-                textarea {
-                    border: none;
-                    border-bottom: 2px solid black;
-                    text-align: center;
-                }
-            }
+        .book-picture {
+            max-width: 100px;
+            padding: 0.5em;
+            margin: 0.5rem;
+            width: 25%;
+            max-height: 150px
         }
 
-        .container-footer {
-            width: 100vw;
+        .book-title {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            width: 50%;
+        }
+
+        .book-description-container {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            width: 25%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-
     }
 
+}
+
+.header-container {
+    display: flex;
+    width: 50%;
+    padding: 1rem;
+    margin: 1rem;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        padding: 0.5rem;
+        max-width: 5rem;
+        height: auto;
+    }
+
+    p {
+        font-size: 5em;
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+
+    input,
+    textarea {
+        border: none;
+        border-bottom: 2px solid black;
+        padding: 0.5em;
+        margin: 0.5em;
+        text-align: center;
+    }
+
+    .button {
+        border: none;
+        background-color: white;
+        border-bottom: 2px solid black;
+        padding: 0.5em;
+        margin: 0.5em;
+        cursor: pointer;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        cursor: pointer;
+      
+        p {
+          margin: auto;
+      
+          max-width: 50px;
+          font-size: small;
+        }
+      }
+
+    .main-searchbar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .additional-searchbar-container {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+
+        .filter {
+            display: flex;
+            padding: 0.5rem;
+            margin: 0.5rem;
+        }
+    }
+}
+
+
+.container-footer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 320px) {
+    .header-container {
+        width: 100%;
+
+        img {
+            padding: 0.5rem;
+            max-width: 2rem;
+        }
+
+        p {
+            font-size: 2em;
+            padding: 0.5rem;
+            margin: 0.5rem;
+        }
+    }
 }
