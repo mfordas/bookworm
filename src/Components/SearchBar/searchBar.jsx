@@ -60,12 +60,12 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
                     placeholder="Type what you're looking for"
                 >
                 </input>
-                <button className="button" onClick={() => setOpenCloseFilters(!openCloseFilters)}>Search Filters</button>
                 <div className="button-container" onClick={() => resetSearch()}>
                         <TiArrowSync />
                         <p>Reset</p>
                     </div>
                 </div>
+                <button className="button" onClick={() => setOpenCloseFilters(!openCloseFilters)}>Open Search Filters</button>
                 { openCloseFilters ?
                 <div className="additional-searchbar-container">
                     <div className="filter">

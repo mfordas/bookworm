@@ -1,10 +1,10 @@
 import React from 'react';
 import SearchBarContent from './searchBar';
 
-const MainPage = () => {
+const SearchBar = () => {
         return (
             <SearchBarContent />
         );
 }
 
-export default MainPage;
+export default SearchBar;
