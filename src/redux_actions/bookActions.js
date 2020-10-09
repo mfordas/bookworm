@@ -9,24 +9,27 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
     try {
         let booksFromApi;
 
-        if (store.getState().booksData.bookTitle === bookTitle) { 
+        if (store.getState().booksData.bookTitle === bookTitle && store.getState().booksData.filter === filter ) { 
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${store.getState().booksData.bookTitle}${filter}&maxResults=10&startIndex=${currentBooksList.length}`);
             
+            console.log(booksFromApi);
             if (booksFromApi.status === 200) {
                 dispatch({
                     type: TYPES.getNextBooks,
                     books: booksFromApi.data.items,
                     bookTitle: bookTitle,
+                    filter: filter,
                 });
             }
         } else {
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}${filter}&maxResults=10&startIndex=0`);
-            
+            console.log(booksFromApi);
             if (booksFromApi.status === 200) {
                 dispatch({
                     type: TYPES.getBooks,
                     books: booksFromApi.data.items,
                     bookTitle: bookTitle,
+                    filter: filter,
                 });
             }
         }
