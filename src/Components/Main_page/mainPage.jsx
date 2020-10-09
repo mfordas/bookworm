@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import { getBooksFromApi } from '../../redux_actions/bookActions';
 import SearchBar from '../SearchBar';
 import BooksList from '../BooksList';
 
@@ -16,12 +13,4 @@ const MainPageContent = () => {
     )
 };
 
-const mapStateToProps = (state) => ({
-    booksData: state.booksData.books,
-});
-
-MainPageContent.propTypes = {
-    booksData: PropTypes.array,
-}
-
-export default connect(mapStateToProps, { getBooksFromApi })(MainPageContent);
+export default MainPageContent;

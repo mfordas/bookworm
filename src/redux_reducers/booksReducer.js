@@ -24,6 +24,13 @@ export default function (state = initialState, action) {
                 bookTitle: action.bookTitle,
                 filter: action.filter,
             };
+        case TYPES.resetSearch:
+            return {
+                ...state,
+                books: action.books,
+                bookTitle: action.bookTitle,
+                filter: action.filter,
+            };
             default:
                 return state;
     }

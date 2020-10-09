@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { store } from '../redux_store/reduxStore';
+import {
+    store
+} from '../redux_store/reduxStore';
 
 import {
     TYPES
@@ -9,10 +11,9 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
     try {
         let booksFromApi;
 
-        if (store.getState().booksData.bookTitle === bookTitle && store.getState().booksData.filter === filter ) { 
+        if (store.getState().booksData.bookTitle === bookTitle && store.getState().booksData.filter === filter) {
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${store.getState().booksData.bookTitle}${filter}&maxResults=10&startIndex=${currentBooksList.length}`);
-            
-            console.log(booksFromApi);
+
             if (booksFromApi.status === 200) {
                 dispatch({
                     type: TYPES.getNextBooks,
@@ -23,7 +24,7 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
             }
         } else {
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}${filter}&maxResults=10&startIndex=0`);
-            console.log(booksFromApi);
+
             if (booksFromApi.status === 200) {
                 dispatch({
                     type: TYPES.getBooks,
@@ -34,10 +35,18 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
             }
         }
 
-        console.log('works');
-
     } catch (error) {
         console.log(error)
     }
 
 };
+
+export const resetSearchResults = () => (dispatch) => {
+
+    dispatch({
+        type: TYPES.resetSearch,
+        books: [],
+        bookTitle: '',
+        filter: '',
+    });
+}

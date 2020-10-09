@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import iso from 'iso-639-1';
+import { TiArrowSync } from 'react-icons/ti';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { getBooksFromApi } from '../../redux_actions/bookActions';
+import { getBooksFromApi, resetSearchResults } from '../../redux_actions/bookActions';
 import { createFilter } from '../../Utils/filter_create';
 
-const SearchBarContent = ({ getBooksFromApi, booksData }) => {
+const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) => {
     const [bookTitle, setBookTitle] = useState('');
     const [bookAuthor, setBookAuthor] = useState('');
     const [language, setLanguage] = useState('');
@@ -14,7 +15,7 @@ const SearchBarContent = ({ getBooksFromApi, booksData }) => {
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            if (bookTitle) {
+            if (bookTitle || bookAuthor) {
                 getBooksFromApi(bookTitle, booksData, createFilter(bookAuthor, language));
                 console.log(booksData);
             };
@@ -41,6 +42,14 @@ const SearchBarContent = ({ getBooksFromApi, booksData }) => {
         }
     }, [booksData]);
 
+
+    const resetSearch = () => {
+        resetSearchResults();
+        setBookTitle('');
+        setBookAuthor('');
+        setLanguage('pl');
+    }
+ 
     return (
             <div className="input-container">
                 <div className="main-searchbar-container">
@@ -52,6 +61,10 @@ const SearchBarContent = ({ getBooksFromApi, booksData }) => {
                 >
                 </input>
                 <button className="button" onClick={() => setOpenCloseFilters(!openCloseFilters)}>Search Filters</button>
+                <div className="button-container" onClick={() => resetSearch()}>
+                        <TiArrowSync />
+                        <p>Reset</p>
+                    </div>
                 </div>
                 { openCloseFilters ?
                 <div className="additional-searchbar-container">
@@ -67,7 +80,7 @@ const SearchBarContent = ({ getBooksFromApi, booksData }) => {
                 </div>
                 <div className="filter">
                 <p>Language: </p>
-                    <select onChange={e => setLanguage(e.target.value)}>
+                    <select className="button" onChange={e => setLanguage(e.target.value)} value={language}>
                     {iso.getAllNames().map((codeName, index) => <option key={index} value={iso.getCode(codeName)}>{codeName}</option>)}
                     </select>
                     </div>
@@ -84,4 +97,4 @@ SearchBarContent.propTypes = {
     booksData: PropTypes.array,
 }
 
-export default connect(mapStateToProps, { getBooksFromApi })(SearchBarContent);
+export default connect(mapStateToProps, { getBooksFromApi, resetSearchResults })(SearchBarContent);
