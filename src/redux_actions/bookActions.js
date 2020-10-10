@@ -48,8 +48,8 @@ export const getBooksFromApi = (
     return dispatch({
       type: TYPES.getBooks,
       books: [],
-      bookTitle: bookTitle,
-      filter: filter
+      bookTitle: '',
+      filter: ''
     });
   }
 };
