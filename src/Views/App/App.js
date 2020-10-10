@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Footer from '../../Components/Footer';
-import Header from '../../Components/Header';
-import MainPage from '../../Components/MainPage';
-import '../../Styling/main_styling.scss';
+import Footer from "../../Components/Footer";
+import Header from "../../Components/Header";
+import MainPage from "../../Components/MainPage";
+import "../../Styling/main_styling.scss";
 
 const App = () => {
   return (
@@ -13,6 +13,6 @@ const App = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

@@ -24,6 +24,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
         return () => {
             clearTimeout(timeoutId);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bookTitle, bookAuthor, language]);
 
     useEffect(() => {
@@ -40,6 +41,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
                 }
             }, 100);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [booksData]);
 
 

@@ -1,5 +1,5 @@
 export const TYPES = {
-    getBooks: 'getBooks',
-    getNextBooks: 'getNextBooks',
-    resetSearch: 'resetSearch',
-}
+  getBooks: "getBooks",
+  getNextBooks: "getNextBooks",
+  resetSearch: "resetSearch"
+};
