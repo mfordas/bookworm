@@ -11,7 +11,7 @@ const BooksListContent = ({ booksData }) => {
                 <p className="book-title">{book.volumeInfo.title}</p>
                 <p className="book-description-container">{book.volumeInfo.description ? `${book.volumeInfo.description.split(' ').slice(0, 15).join(' ')}...` : 'No description found'}</p>
             </div>
-        }) : null
+        }) : <p>Start typing to search for books</p>
     }
 
     return (
