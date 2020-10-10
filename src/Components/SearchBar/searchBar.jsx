@@ -17,13 +17,13 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
         const timeoutId = setTimeout(() => {
             if (bookTitle || bookAuthor) {
                 getBooksFromApi(bookTitle, booksData, createFilter({author: bookAuthor, language: language }));
-                console.log(booksData);
             };
         }, 500);
 
         return () => {
             clearTimeout(timeoutId);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bookTitle, bookAuthor, language]);
 
     useEffect(() => {
@@ -31,15 +31,15 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
         window.onscroll = () => {
             clearTimeout(timer);
             timer = setTimeout(() => {
-                if (document.getElementById('root').getBoundingClientRect().bottom <= window.innerHeight) {
+                if (document.getElementById('root').getBoundingClientRect().bottom <= window.innerHeight+10 && (bookTitle || bookAuthor)) {
                     getBooksFromApi(bookTitle, booksData, createFilter({author: bookAuthor, language: language }));
-                    console.log(booksData)
                 }
                 else {
                     return
                 }
-            }, 100);
+            }, 50);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [booksData]);
 
 
@@ -48,6 +48,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
         setBookTitle('');
         setBookAuthor('');
         setLanguage('');
+        setOpenCloseFilters(false);
     }
  
     return (

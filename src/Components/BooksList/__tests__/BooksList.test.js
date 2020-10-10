@@ -1,9 +1,11 @@
 import React from "react";
-import { render, screen } from '../../../Utils/test-utils';
-import BooksList from '../BooksList';
+import { render, screen } from "../../../Utils/test-utils";
+import BooksList from "../index";
 
 it("renders without crashing", () => {
-  render(<BooksList />)
+  render(<BooksList />);
 
-  expect(screen.getByText(/Start typing to search for books/i)).toBeInTheDocument()
+  expect(
+    screen.getByText(/Start typing to search for books/i)
+  ).toBeInTheDocument();
 });
