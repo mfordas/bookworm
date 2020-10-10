@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import iso from 'iso-639-1';
 import { TiArrowSync } from 'react-icons/ti';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { getBooksFromApi, resetSearchResults } from '../../redux_actions/bookActions';
-import { createFilter } from '../../Utils/filter_create';
+import { createFilter } from '../../Utils/filterCreate';
+import { generateLanguageChangeArea } from '../../Utils/languageChange'
 
 const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) => {
     const [bookTitle, setBookTitle] = useState('');
@@ -16,7 +16,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (bookTitle || bookAuthor) {
-                getBooksFromApi(bookTitle, booksData, createFilter(bookAuthor, language));
+                getBooksFromApi(bookTitle, booksData, createFilter({author: bookAuthor, language: language }));
                 console.log(booksData);
             };
         }, 500);
@@ -32,7 +32,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
             clearTimeout(timer);
             timer = setTimeout(() => {
                 if (document.getElementById('root').getBoundingClientRect().bottom <= window.innerHeight) {
-                    getBooksFromApi(bookTitle, booksData, createFilter(bookAuthor, language));
+                    getBooksFromApi(bookTitle, booksData, createFilter({author: bookAuthor, language: language }));
                     console.log(booksData)
                 }
                 else {
@@ -47,7 +47,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
         resetSearchResults();
         setBookTitle('');
         setBookAuthor('');
-        setLanguage('pl');
+        setLanguage('');
     }
  
     return (
@@ -80,9 +80,7 @@ const SearchBarContent = ({ getBooksFromApi, resetSearchResults, booksData }) =>
                 </div>
                 <div className="filter">
                 <p>Language: </p>
-                    <select className="button" onChange={e => setLanguage(e.target.value)} value={language}>
-                    {iso.getAllNames().map((codeName, index) => <option key={index} value={iso.getCode(codeName)}>{codeName}</option>)}
-                    </select>
+                    { generateLanguageChangeArea(language, setLanguage) }
                     </div>
                 </div> : null }
             </div>

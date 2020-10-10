@@ -15,7 +15,7 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${store.getState().booksData.bookTitle}${filter}&maxResults=10&startIndex=${currentBooksList.length}`);
 
             if (booksFromApi.status === 200) {
-                dispatch({
+               return dispatch({
                     type: TYPES.getNextBooks,
                     books: booksFromApi.data.items,
                     bookTitle: bookTitle,
@@ -26,7 +26,7 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
             booksFromApi = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookTitle}${filter}&maxResults=10&startIndex=0`);
 
             if (booksFromApi.status === 200) {
-                dispatch({
+               return dispatch({
                     type: TYPES.getBooks,
                     books: booksFromApi.data.items,
                     bookTitle: bookTitle,
@@ -36,17 +36,22 @@ export const getBooksFromApi = (bookTitle, currentBooksList, filter) => async (d
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return dispatch({
+            type: TYPES.getBooks,
+            books: [],
+            bookTitle: bookTitle,
+            filter: filter,
+        });
     }
 
 };
 
-export const resetSearchResults = () => (dispatch) => {
-
-    dispatch({
+export const resetSearchResults = () => {
+return {
         type: TYPES.resetSearch,
         books: [],
         bookTitle: '',
         filter: '',
-    });
+    };
 }
